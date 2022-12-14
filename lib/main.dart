@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       // home: MyHomePage(),
       routes: {
         '/': (context) => FirstPage(
-              hex: const Color(0xffffffff),
+              hex: const Color(0xff443a49),
             ),
         '/second': (context) => const SecondPage()
       },
@@ -36,6 +36,7 @@ class _FirstPageState extends State<FirstPage> {
   @override
   Widget build(BuildContext context) {
     // Color code = hex;
+    Color result = const Color(0xff443a49);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Testing Space"),
@@ -45,18 +46,33 @@ class _FirstPageState extends State<FirstPage> {
           const Text("This is the first page"),
           const SizedBox(height: 50),
           ElevatedButton(
+              // onPressed: () {
+              //   Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //           builder: (context) => const SecondPage()));
+              // },
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const SecondPage()));
+                var result = _navigateAndDisplaySelection(context);
               },
               child: const Text("Next page")),
-          //  Text(code.toString())
+          Text(result.toString())
         ]),
       ),
     );
   }
+}
+
+// FUTURE ROUTE
+Future<void> _navigateAndDisplaySelection(BuildContext context) async {
+  final Color result = await Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => const SecondPage()),
+  );
+
+  ScaffoldMessenger.of(context)
+    ..removeCurrentSnackBar()
+    ..showSnackBar(SnackBar(content: Text(result.toString())));
 }
 
 // Second Page
@@ -169,7 +185,12 @@ class _SecondPageState extends State<SecondPage>
           ),
         ),
         const SizedBox(height: 20),
-        Text(colorPicker.toString())
+        // Text(colorPicker.toString())
+        ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context, colorPicker);
+            },
+            child: Text(colorPicker.toString()))
       ]),
     );
   }
