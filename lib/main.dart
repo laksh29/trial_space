@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+// First Page
 class FirstPage extends StatefulWidget {
   FirstPage({super.key, required this.hex});
   Color hex;
@@ -46,16 +47,11 @@ class _FirstPageState extends State<FirstPage> {
           const Text("This is the first page"),
           const SizedBox(height: 50),
           ElevatedButton(
-              // onPressed: () {
-              //   Navigator.push(
-              //       context,
-              //       MaterialPageRoute(
-              //           builder: (context) => const SecondPage()));
-              // },
               onPressed: () {
                 var result = _navigateAndDisplaySelection(context);
               },
               child: const Text("Next page")),
+          // color hex output (from second page)
           Text(result.toString())
         ]),
       ),
@@ -121,8 +117,9 @@ class _SecondPageState extends State<SecondPage>
         title: const Text("Second Page"),
       ),
       body: Column(children: [
+        // animated container
+        // to show color options
         AnimatedContainer(
-          // margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           duration: const Duration(milliseconds: 300),
           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 10),
           width: 400,
@@ -137,13 +134,13 @@ class _SecondPageState extends State<SecondPage>
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
-                      // color text
                       child: Text("COLOR :",
                           style: GoogleFonts.poppins(
                             textStyle: buildPoppinsW500(16.0),
                           )),
                     ),
                     const Spacer(),
+
                     // color show case
                     AnimatedContainer(
                       duration: const Duration(milliseconds: 500),
@@ -155,6 +152,7 @@ class _SecondPageState extends State<SecondPage>
                       ),
                     ),
                     const Spacer(),
+
                     // animated button menu - arrow
                     IconButton(
                       onPressed: () {
@@ -164,10 +162,10 @@ class _SecondPageState extends State<SecondPage>
                           icon: AnimatedIcons.menu_arrow,
                           color: Colors.white,
                           progress: _animateController),
-                      // splashColor: Colors.transparent,
                     )
                   ],
                 ),
+
                 // Color Drop Down Menu
                 color == true
                     ? SizedBox(
@@ -185,17 +183,15 @@ class _SecondPageState extends State<SecondPage>
           ),
         ),
         const SizedBox(height: 20),
-        // Text(colorPicker.toString())
-        ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context, colorPicker);
-            },
-            child: Text(colorPicker.toString()))
+
+        // selected color hex code as text output
+        Text(colorPicker.toString())
       ]),
     );
   }
 }
 
+// text style
 TextStyle buildPoppinsW500(size) {
   return TextStyle(
       color: Colors.white, fontSize: size, fontWeight: FontWeight.w500);
